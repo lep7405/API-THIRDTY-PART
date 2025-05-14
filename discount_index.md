@@ -12,7 +12,7 @@ GET url/api/discounts
 | pageDiscount      | integer      | Không    | Trang hiện tại                                 | 1           |
 | search            | string       | Không    | Từ khóa tìm kiếm                               | "sale"      |
 | sortStartedAt     | string       | Không    | Sắp xếp theo trường `started_at` (asc/desc)    | "desc"      |
-| withCoupon        |boolean/int   | Không    | Lấy kèm thông tin coupon (1: có, 0: không)     | 1           |
+| withCoupon        |boolean/int   | Không    | Lấy kèm thông tin coupon                       | true        |
 
 ---
 
@@ -25,16 +25,7 @@ discounts thuộc Illuminate\AwareLenth\Paginator
 ```jsx
 {
     "message": "Discounts retrieved successfully",
-    "discounts": {
-        "current_page": 2,
-        "data": [
-            { "id": 11, "name": "Sale 11", "started_at": "2024-05-01", "expired_at": "2024-05-31" },
-            { "id": 12, "name": "Sale 12", "started_at": "2024-06-01", "expired_at": "2024-06-30" }
-        ],
-        "last_page": 5,
-        "per_page": 10,
-        "total": 50
-    }
+    "discounts": $discounts
 }
 ```
 ![image](https://github.com/user-attachments/assets/0d791854-dfc2-4916-a409-55cb0fd274e0)
