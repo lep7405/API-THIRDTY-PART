@@ -34,6 +34,7 @@ POST /api/discounts
 }
 
 ## Response mẫu
+Status code : 201
 json()
 {
     "message": "Discount created successfully",
