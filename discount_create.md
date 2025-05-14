@@ -13,9 +13,9 @@ POST url/api/discounts
 | started_at | datetime | Không | Thời gian bắt đầu | null |
 | expired_at | datetime | Không | Thời gian kết thúc | null |
 | usage_limit | integer | Không | Giới hạn số lần sử dụng | null |
-| value | integer | Có | Giá trị discount | "10" |
-| trial_days | integer | Có | Số ngày dùng thử | "0" |
-| discount_month | integer | Có | Số tháng áp dụng discount | "12" |
+| value | integer | Có | Giá trị discount | 10 |
+| trial_days | integer | Có | Số ngày dùng thử | 0 |
+| discount_month | integer | Có | Số tháng áp dụng discount | 12 |
 
 ---
 
