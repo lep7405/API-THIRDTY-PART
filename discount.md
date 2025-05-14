@@ -241,4 +241,13 @@ $discount = Discount::query()
             ->find($id);
 ```
 
-
+### 6. GET /api/discounts/total
+#### Response Sample
+- **Status Code**: 200 (OK)
+- **Body**:
+  ```json
+  {
+      "message": "Discount deleted successfully",
+      "total" : Discount::count()
+  }
+  ```
