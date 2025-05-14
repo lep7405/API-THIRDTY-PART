@@ -1,0 +1,1 @@
+-Dữ liệu lấy ra từ json thì nó là mảng , xong đó decode xong thì nó thành std class 
