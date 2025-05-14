@@ -1,38 +1,34 @@
-## Endpoint , chú ý cái tham số withCoupon nữa 
+## API Endpoints
 
-GET url/api/discounts
+### 1. GET /api/discounts
+#### Query Parameters
+| Parameter Name   | Data Type   | Required | Description                          | Example Value |
+|------------------|-------------|----------|--------------------------------------|---------------|
+| `perPageDiscount` | integer     | No       | Number of records per page (pagination) | 10            |
+| `pageDiscount`   | integer     | No       | Current page                         | 1             |
+| `search`         | string      | No       | Search keyword                       | "sale"        |
+| `sortStartedAt`  | string      | No       | Sort by `started_at` field (asc/desc) | "desc"        |
+| `withCoupon`     | boolean/int | No       | Include coupon information           | true          |
 
----
-
-## Query Parameters
-
-| Tên tham số       | Kiểu dữ liệu | Bắt buộc | Mô tả                                          | Giá trị mẫu |
-|-------------------|--------------|----------|------------------------------------------------|-------------|
-| perPageDiscount   | integer      | Không    | Số lượng bản ghi trên 1 trang (phân trang)     | 10          |
-| pageDiscount      | integer      | Không    | Trang hiện tại                                 | 1           |
-| search            | string       | Không    | Từ khóa tìm kiếm                               | "sale"      |
-| sortStartedAt     | string       | Không    | Sắp xếp theo trường `started_at` (asc/desc)    | "desc"      |
-| withCoupon        |boolean/int   | Không    | Lấy kèm thông tin coupon                       | true        |
-
----
-
-## Ví dụ query gửi lên
-
-GET url/api/discounts?perPageDiscount=10&pageDiscount=2&search=sale&sortStartedAt=desc&withCoupon=1
-
-## Response mẫu
-discounts thuộc Illuminate\AwareLenth\Paginator
-```jsx
-{
-    "message": "Discounts retrieved successfully",
-    "discounts": $discounts
-}
+#### Example Request
 ```
-![image](https://github.com/user-attachments/assets/0d791854-dfc2-4916-a409-55cb0fd274e0)
+GET /api/discounts?perPageDiscount=10&pageDiscount=2&search=sale&sortStartedAt=desc&withCoupon=1
+```
 
-## Logic hiện tại 
+#### Response Sample
+- **Status Code**: 200 (OK)
+- **Body**:
+  ```json
+  {
+      "message": "Discounts retrieved successfully",
+      "discounts": $discounts
+  }
+  ```
+  - **Note**: `$discounts` belongs to `Illuminate\Pagination\LengthAwarePaginator`.
+  - **Image Reference**: ![image](https://github.com/user-attachments/assets/0d791854-dfc2-4916-a409-55cb0fd274e0)
 
-```jsx
+#### Current Logic
+```php
 $query = $this->getModel();
 
 if ($withCoupon) {
@@ -74,7 +70,7 @@ $query = $query->orderBy('id', 'desc');
 
 $result = $query->paginate(
     $perPage,
-    ['id','name','started_at','expired_at','type','value','usage_limit','trial_days'],
+    ['id', 'name', 'started_at', 'expired_at', 'type', 'value', 'usage_limit', 'trial_days'],
     'pageDiscount',
     $pageDiscount
 );
@@ -82,28 +78,23 @@ $result = $query->paginate(
 return $result;
 ```
 
-## Endpoint 
-Ví dụ
-POST url/api/discounts
-
 ---
 
-## Request Body (POST)
-| Tên tham số | Kiểu dữ liệu | Bắt buộc | Mô tả | Giá trị mẫu |
-|------------------|--------------|----------|------------------------------------------------|-------------|
-| name | string | Có | Tên của discount | "discount 1"|
-| type | string | Có | Loại discount (percentage/fixed) | "percentage"|
-| started_at | datetime | Không | Thời gian bắt đầu | null |
-| expired_at | datetime | Không | Thời gian kết thúc | null |
-| usage_limit | integer | Không | Giới hạn số lần sử dụng | null |
-| value | integer | Có | Giá trị discount | 10 |
-| trial_days | integer | Có | Số ngày dùng thử | 0 |
-| discount_month | integer | Có | Số tháng áp dụng discount | 12 |
+### 2. POST /api/discounts
+#### Request Body
+| Parameter Name   | Data Type | Required | Description                | Example Value |
+|------------------|-----------|----------|----------------------------|---------------|
+| `name`           | string    | Yes      | Name of the discount       | "discount 1"  |
+| `type`           | string    | Yes      | Discount type (percentage/fixed) | "percentage" |
+| `started_at`     | datetime  | No       | Start time                 | null          |
+| `expired_at`     | datetime  | No       | End time                   | null          |
+| `usage_limit`    | integer   | No       | Usage limit                | null          |
+| `value`          | integer   | Yes      | Discount value             | 10            |
+| `trial_days`     | integer   | Yes      | Trial days                 | 0             |
+| `discount_month` | integer   | Yes      | Discount months            | 12            |
 
----
-
-## Ví dụ query gửi lên
-
+#### Example Request
+```
 POST /api/discounts
 {
     "name": "discount 1",
@@ -115,50 +106,47 @@ POST /api/discounts
     "trial_days": 0,
     "discount_month": 12
 }
+```
 
-## Response mẫu
-Status code : 201
-json()
-{
-    "message": "Discount created successfully",
-    "discount": {
-        "id": 1,
-        "name": "discount 1",
-        "type": "percentage",
-        "value": 10,
-        "started_at": null,
-        "expired_at": null,
-        "usage_limit": null,
-        "trial_days": 0,
-        "discount_month": 12,
-        "created_at": "2024-03-20T10:00:00.000000Z",
-        "updated_at": "2024-03-20T10:00:00.000000Z"
-    }
-}
-
-
-## Endpoint 
-Ví dụ
-PUT url/api/discount/{id}
+#### Response Sample
+- **Status Code**: 201 (Created)
+- **Body**:
+  ```json
+  {
+      "message": "Discount created successfully",
+      "discount": {
+          "id": 1,
+          "name": "discount 1",
+          "type": "percentage",
+          "value": 10,
+          "started_at": null,
+          "expired_at": null,
+          "usage_limit": null,
+          "trial_days": 0,
+          "discount_month": 12,
+          "created_at": "2024-03-20T10:00:00.000000Z",
+          "updated_at": "2024-03-20T10:00:00.000000Z"
+      }
+  }
+  ```
 
 ---
 
-## Request Body (POST)
-| Tên tham số | Kiểu dữ liệu | Bắt buộc | Mô tả | Giá trị mẫu |
-|------------------|--------------|----------|------------------------------------------------|-------------|
-| name | string | Không | Tên của discount | "discount 1"|
-| type | string | Không | Loại discount (percentage/fixed) | "percentage"|
-| started_at | datetime | Không | Thời gian bắt đầu | null |
-| expired_at | datetime | Không | Thời gian kết thúc | null |
-| usage_limit | integer | Không | Giới hạn số lần sử dụng | null |
-| value | integer | Không | Giá trị discount | 10 |
-| trial_days | integer | Không | Số ngày dùng thử | 0 |
-| discount_month | integer | Không | Số tháng áp dụng discount | 12 |
+### 3. PUT /api/discount/{id}
+#### Request Body
+| Parameter Name   | Data Type | Required | Description                | Example Value |
+|------------------|-----------|----------|----------------------------|---------------|
+| `name`           | string    | No       | Name of the discount       | "discount 1"  |
+| `type`           | string    | No       | Discount type (percentage/fixed) | "percentage" |
+| `started_at`     | datetime  | No       | Start time                 | null          |
+| `expired_at`     | datetime  | No       | End time                   | null          |
+| `usage_limit`    | integer   | No       | Usage limit                | null          |
+| `value`          | integer   | No       | Discount value             | 10            |
+| `trial_days`     | integer   | No       | Trial days                 | 0             |
+| `discount_month` | integer   | No       | Discount months            | 12            |
 
----
-
-## Ví dụ query gửi lên
-
+#### Example Request
+```
 PUT /api/discount/{id}
 {
     "name": "discount 1",
@@ -170,69 +158,85 @@ PUT /api/discount/{id}
     "trial_days": 0,
     "discount_month": 12
 }
+```
 
-## Response mẫu
-Status code : 200
-json()
-{
-    "message": "Discount updated successfully",
-    "discount": {
-        "id": 1,
-        "name": "discount 1",
-        "type": "percentage",
-        "value": 10,
-        "started_at": null,
-        "expired_at": null,
-        "usage_limit": null,
-        "trial_days": 0,
-        "discount_month": 12,
-        "created_at": "2024-03-20T10:00:00.000000Z",
-        "updated_at": "2024-03-20T10:00:00.000000Z"
-    }
-}
-
-
-## Endpoint 
-Ví dụ
-DELETE url/api/discount/{id}
+#### Response Sample
+- **Status Code**: 200 (OK)
+- **Body**:
+  ```json
+  {
+      "message": "Discount updated successfully",
+      "discount": {
+          "id": 1,
+          "name": "discount 1",
+          "type": "percentage",
+          "value": 10,
+          "started_at": null,
+          "expired_at": null,
+          "usage_limit": null,
+          "trial_days": 0,
+          "discount_month": 12,
+          "created_at": "2024-03-20T10:00:00.000000Z",
+          "updated_at": "2024-03-20T10:00:00.000000Z"
+      }
+  }
+  ```
 
 ---
-## Response mẫu
-Status code : 200
-json()
-{
-    "message": "Discount deleted successfully",
-}
 
-##
-GET /api/discount/{id}
+### 4. DELETE /api/discount/{id}
+#### Response Sample
+- **Status Code**: 200 (OK)
+- **Body**:
+  ```json
+  {
+      "message": "Discount deleted successfully"
+  }
+  ```
 
-## Query Parameters
-| Tên tham số | Kiểu dữ liệu | Bắt buộc | Mô tả | Giá trị mẫu |
-|-------------|--------------|----------|-------|-------------|
-| withCoupon | boolean | Không | Lấy kèm thông tin coupon | true |
+---
 
-## Response
-Status Code: 200 (OK)
-json()
-{
-    "data": {
-        "id": 1,
-        "name": "discount 1",
-        "type": "percentage",
-        "value": "10",
-        "started_at": null,
-        "expired_at": null,
-        "usage_limit": null,
-        "trial_days": "0",
-        "discount_month": "12",
-        "created_at": "2024-03-20T10:00:00.000000Z",
-        "updated_at": "2024-03-20T10:00:00.000000Z",
-        "coupons": [
-            {
-                "id": 1,
-                "code": "DISCOUNT10",
-                }
-        ]
-    }
-}
+### 5. GET /api/discount/{id}
+#### Query Parameters
+| Parameter Name | Data Type | Required | Description          | Example Value |
+|----------------|-----------|----------|----------------------|---------------|
+| `withCoupon`   | boolean   | No       | Include coupon info  | true          |
+
+#### Response Sample
+- **Status Code**: 200 (OK)
+- **Body**:
+  ```json
+  {
+      "data": {
+          "id": 1,
+          "name": "discount 1",
+          "type": "percentage",
+          "value": "10",
+          "started_at": null,
+          "expired_at": null,
+          "usage_limit": null,
+          "trial_days": "0",
+          "discount_month": "12",
+          "created_at": "2024-03-20T10:00:00.000000Z",
+          "updated_at": "2024-03-20T10:00:00.000000Z",
+          "coupons": [
+              {
+                  "id": 1,
+                  "code": "DISCOUNT10"
+              }
+          ]
+      }
+  }
+  ```
+#### Current Logic
+```php
+$discount = Discount::query()
+            ->when($withCoupon, function ($query) {
+                $query->with(['coupon' => function ($query) {
+                    $query->select('id', 'times_used', 'discount_id');
+                }]);
+            })
+            ->find($id);
+```
+
+
