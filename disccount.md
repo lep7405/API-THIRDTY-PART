@@ -58,9 +58,11 @@ GET /api/discounts?perPageDiscount=10&pageDiscount=1&search=summer&sortStartedAt
 
 ---
 
-### 2. POST /api/discount/create
+### 2. POST /api/discounts
 
 Creates a new discount.
+
+Some databases have a discounts table with a discount_month column.
 
 #### Request Body
 
@@ -68,7 +70,7 @@ Creates a new discount.
 |------------------|-----------|----------|--------------------------|---------------|
 | `name`           | string    | Yes      | Discount name            | "Summer Sale" |
 | `type`           | string    | Yes      | Discount type            | "percentage"  |
-| `value`          | integer   | Yes      | Discount value           | 10            |
+| `value`          | integer   | No      | Discount value           | 10            |
 | `started_at`     | datetime  | No       | Start date and time      | null          |
 | `expired_at`     | datetime  | No       | Expiration date and time | null          |
 | `usage_limit`    | integer   | No       | Usage limit              | 100           |
@@ -112,9 +114,11 @@ POST /api/discount/create
 
 ---
 
-### 3. PUT /api/discount/{id}
+### 3. PUT /api/discounts/{id}
 
 Updates an existing discount.
+
+Some databases have a discounts table with a discount_month column.
 
 #### Path Parameters
 
@@ -134,11 +138,10 @@ Updates an existing discount.
 | `usage_limit`    | integer   | No       | Usage limit              | 200           |
 | `trial_days`     | integer   | No       | Trial period in days     | 7             |
 | `discount_month` | integer   | No       | Discount months          | 12            |
-| `discount_for_x_month` | string | No    | Enable monthly discount  | "1"           |
 
 #### Example Request
 ```
-PUT /api/discount/1
+PUT /api/discounts/1
 {
   "name": "Summer Sale Extended",
   "value": 15,
@@ -169,7 +172,7 @@ PUT /api/discount/1
 
 ---
 
-### 4. DELETE /api/discount/{id}
+### 4. DELETE /api/discounts/{id}
 
 Deletes a discount.
 
@@ -181,7 +184,7 @@ Deletes a discount.
 
 #### Example Request
 ```
-DELETE /api/discount/1
+DELETE /api/discounts/1
 ```
 
 #### Response
@@ -193,7 +196,7 @@ DELETE /api/discount/1
 
 ---
 
-### 5. GET /api/discount/{id}
+### 5. GET /api/discounts/{id}
 
 Retrieves a discount by its ID.
 
@@ -211,7 +214,7 @@ Retrieves a discount by its ID.
 
 #### Example Request
 ```
-GET /api/discount/1?withCoupon=true
+GET /api/discounts/1?withCoupon=true
 ```
 
 #### Response
@@ -269,26 +272,8 @@ GET /api/discounts/id-and-name
 }
 ```
 
-## Error Handling
-
-All endpoints return standardized error responses with appropriate HTTP status codes:
-
-```json
-{
-  "error": true,
-  "message": "The discount service is currently unavailable. Please try again later."
-}
-```
-
 ### Common Error Cases
 
 - **404**: Resource not found
-- **409**: Conflict
-- **422**: Validation error (invalid data)
 - **500**: Server error
 
-## Business Rules
-
-1. Discounts with associated coupons that have been used cannot be deleted
-2. Special database types may have unique handling for monthly discount settings
-3. When updating a discount, validation rules depend on whether associated coupons have been used
