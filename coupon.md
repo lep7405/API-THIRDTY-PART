@@ -12,7 +12,7 @@ Lấy danh sách các coupon với tùy chọn phân trang và lọc.
 | Tên           | Kiểu    | Bắt buộc | Mô tả                            | Giá trị mẫu  |
 |---------------|---------|----------|----------------------------------|--------------|
 | `perPageCoupon` | integer | Không    | Số lượng bản ghi mỗi trang       | 10           |
-| `page`        | integer | Không    | Số trang hiện tại                | 1            |
+| `pageCoupon`        | integer | Không    | Số trang hiện tại                | 1            |
 | `searchCoupon` | string  | Không    | Tìm kiếm theo mã coupon         | "SUMMER"     |
 | `status`      | string  | Không    | Lọc theo trạng thái (0=không hoạt động, 1=hoạt động) | "1"  |
 | `timeUsed`    | string  | Không    | Sắp xếp theo lượt sử dụng (asc/desc) | "desc"     |
@@ -20,7 +20,7 @@ Lấy danh sách các coupon với tùy chọn phân trang và lọc.
 
 #### Ví dụ Request
 ```
-GET /api/coupons?perPageCoupon=10&page=1&searchCoupon=SUMMER&status=1&timeUsed=desc
+GET /api/coupons?perPageCoupon=10&pageCoupon=1&searchCoupon=SUMMER&status=1&timeUsed=desc
 ```
 
 #### Ví dụ Response
