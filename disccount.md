@@ -29,8 +29,8 @@ GET /api/discounts?perPageDiscount=10&pageDiscount=1&search=summer&sortStartedAt
 ```json
 {
   "message": "Discounts retrieved successfully",
-  "discounts": {
-    "discountData": [
+  "data": {
+    "discounts": [
       {
         "id": 1,
         "name": "Summer Sale",
@@ -49,9 +49,9 @@ GET /api/discounts?perPageDiscount=10&pageDiscount=1&search=summer&sortStartedAt
         ]
       }
     ],
-    "totalPagesDiscount": 5,
-    "totalItemsDiscount": 42,
-    "currentPagesDiscount": 1
+    "totalPages": 5,
+    "totalItems": 42,
+    "currentPage": 1
   }
 }
 ```
