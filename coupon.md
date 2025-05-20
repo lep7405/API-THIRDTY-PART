@@ -1,29 +1,29 @@
 # Coupon API Documentation
 
 ## Overview
-Documentation for Coupon Service API endpoints, including request parameters and expected responses.
+Tài liệu này mô tả chi tiết các API endpoint cho dịch vụ Coupon, bao gồm các tham số yêu cầu và phản hồi mong đợi.
 
 ## API Endpoints
 
 ### 1. GET /api/coupons
-Retrieves a list of coupons with pagination and filtering options.
+Lấy danh sách các coupon với tùy chọn phân trang và lọc.
 
-#### Query Parameters
-| Parameter Name    | Data Type | Required | Description                          | Example Value |
-|-------------------|-----------|----------|--------------------------------------|---------------|
-| `perPageCoupon`   | integer   | No       | Number of records per page           | 5             |
-| `page`            | integer   | No       | Current page number                  | 1             |
-| `searchCoupon`    | string    | No       | Search keyword for coupon code       | "SUMMER"      |
-| `status`          | string    | No       | Filter by status (0=inactive, 1=active) | "1"        |
-| `timeUsed`        | string    | No       | Sort by times used (asc/desc)        | "desc"        |
-| `discountId`      | integer   | No       | Filter by discount ID                | 123           |
+#### Tham số Query
+| Tên           | Kiểu    | Bắt buộc | Mô tả                            | Giá trị mẫu  |
+|---------------|---------|----------|----------------------------------|--------------|
+| `perPageCoupon` | integer | Không    | Số lượng bản ghi mỗi trang       | 10           |
+| `page`        | integer | Không    | Số trang hiện tại                | 1            |
+| `searchCoupon` | string  | Không    | Tìm kiếm theo mã coupon         | "SUMMER"     |
+| `status`      | string  | Không    | Lọc theo trạng thái (0=không hoạt động, 1=hoạt động) | "1"  |
+| `timeUsed`    | string  | Không    | Sắp xếp theo lượt sử dụng (asc/desc) | "desc"     |
+| `discountId`  | integer | Không    | Lọc theo ID giảm giá             | 123          |
 
-#### Example Request
+#### Ví dụ Request
 ```
 GET /api/coupons?perPageCoupon=10&page=1&searchCoupon=SUMMER&status=1&timeUsed=desc
 ```
 
-#### Response Sample
+#### Ví dụ Response
 ```json
 {
   "data": {
@@ -40,9 +40,7 @@ GET /api/coupons?perPageCoupon=10&page=1&searchCoupon=SUMMER&status=1&timeUsed=d
         "updated_at": "2024-06-05T15:30:00.000000Z",
         "discount": {
           "id": 123,
-          "name": "Summer Discount",
-          "type": "percentage",
-          "value": 10
+          "name": "Summer Discount"
         }
       }
     ],
@@ -55,95 +53,20 @@ GET /api/coupons?perPageCoupon=10&page=1&searchCoupon=SUMMER&status=1&timeUsed=d
 
 ---
 
-### 2. GET /api/coupon/code/{code}
-Retrieves a coupon by its code.
-
-#### Path Parameters
-| Parameter Name | Data Type | Required | Description     | Example Value |
-|----------------|-----------|----------|-----------------|---------------|
-| `code`         | string    | Yes      | Coupon code     | "SUMMER2024"  |
-
-#### Example Request
-```
-GET /api/coupon/code/SUMMER2024
-```
-
-#### Response Sample
-```json
-{
-  "coupon": {
-    "id": 1,
-    "code": "SUMMER2024",
-    "shop": "example-shop.myshopify.com",
-    "discount_id": 123,
-    "automatic": 0,
-    "times_used": 5,
-    "status": 1,
-    "created_at": "2024-06-01T10:00:00.000000Z",
-    "updated_at": "2024-06-05T15:30:00.000000Z"
-  }
-}
-```
-
----
-
-### 3. GET /api/coupons/{id}
-Retrieves a coupon by its ID.
-
-#### Path Parameters
-| Parameter Name | Data Type | Required | Description    | Example Value |
-|----------------|-----------|----------|----------------|---------------|
-| `id`           | integer   | Yes      | Coupon ID      | 1             |
-
-#### Query Parameters
-| Parameter Name  | Data Type | Required | Description                   | Example Value |
-|-----------------|-----------|----------|-------------------------------|---------------|
-| `withDiscount`  | boolean   | No       | Include discount information  | true          |
-
-#### Example Request
-```
-GET /api/coupon/id/1?withDiscount=true
-```
-
-#### Response Sample
-```json
-{
-  "coupon": {
-    "id": 1,
-    "code": "SUMMER2024",
-    "shop": "example-shop.myshopify.com",
-    "discount_id": 123,
-    "automatic": 0,
-    "times_used": 5,
-    "status": 1,
-    "created_at": "2024-06-01T10:00:00.000000Z",
-    "updated_at": "2024-06-05T15:30:00.000000Z",
-    "discount": {
-      "id": 123,
-      "name": "Summer Discount",
-      "type": "percentage",
-      "value": 10,
-      "started_at": "2024-06-01T00:00:00.000000Z",
-      "expired_at": "2024-08-31T23:59:59.000000Z"
-    }
-  }
-}
-```
-
----
-
-### 4. POST /api/coupons
-Creates a new coupon.
+### 2. POST /api/coupons
+Tạo mới một coupon.
 
 #### Request Body
-| Parameter Name | Data Type | Required | Description            | Example Value |
-|----------------|-----------|----------|------------------------|---------------|
-| `code`         | string    | Yes      | Coupon code           | "SUMMER2024"  |
-| `shop`         | string    | No       | Shop domain           | "example-shop.myshopify.com" |
-| `discount_id`  | integer   | Yes      | Associated discount ID | 123           |
-| `automatic`    | boolean/int | No     | Is coupon automatic   | 0             |
+| Tên           | Kiểu      | Bắt buộc | Mô tả                      | Giá trị mẫu                |
+|---------------|-----------|----------|----------------------------|----------------------------|
+| `code`        | string    | Có       | Mã coupon                  | "SUMMER2024"              |
+| `shop`        | string    | Không    | Tên miền shop              | "example-shop.myshopify.com" |
+| `discount_id` | integer   | Có       | ID của discount liên kết   | 123                        |
+| `automatic`   | boolean/int | Không   |    | 0                          |
+| `status`   | boolean/int | Không   |    | 0                          |
+| `times_used`   | integer | Không   | Số lần dùng coupon   | 0                          |
 
-#### Example Request
+#### Ví dụ Request
 ```
 POST /api/coupons
 {
@@ -154,9 +77,10 @@ POST /api/coupons
 }
 ```
 
-#### Response Sample
+#### Ví dụ Response
 ```json
 {
+  "message": "Coupon created successfully",
   "coupon": {
     "id": 1,
     "code": "SUMMER2024",
@@ -173,43 +97,186 @@ POST /api/coupons
 
 ---
 
-### 5. PUT /api/coupons/{id}
-Updates an existing coupon.
+### 3. GET /api/coupons/id/{id}
+Lấy thông tin coupon theo ID.
 
-#### Path Parameters
-| Parameter Name | Data Type | Required | Description    | Example Value |
-|----------------|-----------|----------|----------------|---------------|
-| `id`           | integer   | Yes      | Coupon ID      | 1             |
+#### Tham số Path
+| Tên  | Kiểu    | Bắt buộc | Mô tả     | Giá trị mẫu |
+|------|---------|----------|-----------|-------------|
+| `id` | integer | Có       | ID coupon | 1           |
+
+#### Tham số Query
+| Tên           | Kiểu    | Bắt buộc | Mô tả                        | Giá trị mẫu |
+|---------------|---------|----------|------------------------------|-------------|
+| `withDiscount`| boolean | Không    | Bao gồm thông tin discount   | true        |
+
+#### Ví dụ Request
+```
+GET /api/coupons/id/1?withDiscount=true
+```
+
+#### Ví dụ Response
+```json
+{
+  "message": "Coupon retrieved successfully",
+  "coupon": {
+    "id": 1,
+    "code": "SUMMER2024",
+    "shop": "example-shop.myshopify.com",
+    "discount_id": 123,
+    "automatic": 0,
+    "times_used": 5,
+    "status": 1,
+    "created_at": "2024-06-01T10:00:00.000000Z",
+    "updated_at": "2024-06-05T15:30:00.000000Z",
+    "discount": {
+      "id": 123,
+      "name": "Summer Discount"
+    }
+  }
+}
+```
+
+---
+
+### 4. GET /api/coupons/code/{code}
+Lấy thông tin coupon theo mã code.
+
+#### Tham số Path
+| Tên    | Kiểu   | Bắt buộc | Mô tả     | Giá trị mẫu  |
+|--------|--------|----------|-----------|--------------|
+| `code` | string | Có       | Mã coupon | "SUMMER2024" |
+
+#### Ví dụ Request
+```
+GET /api/coupons/code/SUMMER2024
+```
+
+#### Ví dụ Response
+```json
+{
+  "message": "Coupon retrieved successfully",
+  "coupon": {
+    "id": 1,
+    "code": "SUMMER2024",
+    "shop": "example-shop.myshopify.com",
+    "discount_id": 123,
+    "automatic": 0,
+    "times_used": 5,
+    "status": 1,
+    "created_at": "2024-06-01T10:00:00.000000Z",
+    "updated_at": "2024-06-05T15:30:00.000000Z"
+  }
+}
+```
+
+---
+
+### 5. GET /api/coupons/discount/{id}/shop/{shop}
+Lấy coupon theo ID giảm giá và shop.
+
+#### Tham số Path
+| Tên    | Kiểu    | Bắt buộc | Mô tả          | Giá trị mẫu                |
+|--------|---------|----------|----------------|----------------------------|
+| `id`   | integer | Có       | ID giảm giá    | 123                        |
+| `shop` | string  | Có       | Tên miền shop  | "example-shop.myshopify.com" |
+
+#### Ví dụ Request
+```
+GET /api/coupons/discount/123/shop/example-shop.myshopify.com/
+```
+
+#### Ví dụ Response
+```json
+{
+  "message": "Coupons retrieved successfully",
+  "coupon": {
+    "id": 1,
+    "code": "SUMMER2024",
+    "shop": "example-shop.myshopify.com",
+    "discount_id": 123,
+    "automatic": 0,
+    "times_used": 5,
+    "status": 1,
+    "created_at": "2024-06-01T10:00:00.000000Z",
+    "updated_at": "2024-06-05T15:30:00.000000Z"
+  }
+}
+```
+
+---
+
+### 6. GET /api/coupons/discount/{id}
+Lấy danh sách các coupon theo ID giảm giá và có mã bắt đầu bằng "GENAUTO".
+
+#### Tham số Path
+| Tên  | Kiểu    | Bắt buộc | Mô tả       | Giá trị mẫu |
+|------|---------|----------|-------------|-------------|
+| `id` | integer | Có       | ID giảm giá | 123         |
+
+#### Ví dụ Request
+```
+GET /api/coupons/discount/123
+```
+
+#### Ví dụ Response
+```json
+{
+  "message": "Coupons retrieved successfully",
+  "coupon": [
+    {
+      "id": 1,
+      "code": "GENAUTO2024",
+      "shop": "example-shop.myshopify.com",
+      "discount_id": 123,
+      "automatic": 1,
+      "times_used": 5,
+      "status": 1,
+      "created_at": "2024-06-01T10:00:00.000000Z",
+      "updated_at": "2024-06-05T15:30:00.000000Z"
+    }
+  ]
+}
+```
+
+---
+
+### 7. PUT /api/coupons/{id}
+Cập nhật thông tin coupon.
+
+#### Tham số Path
+| Tên  | Kiểu    | Bắt buộc | Mô tả     | Giá trị mẫu |
+|------|---------|----------|-----------|-------------|
+| `id` | integer | Có       | ID coupon | 1           |
 
 #### Request Body
-| Parameter Name | Data Type | Required | Description            | Example Value |
-|----------------|-----------|----------|------------------------|---------------|
-| `code`         | string    | No       | Coupon code           | "SUMMER2024"  |
-| `shop`         | string    | No       | Shop domain           | "example-shop.myshopify.com" |
-| `discount_id`  | integer   | No       | Associated discount ID | 123           |
-| `automatic`    | boolean/int | No     | Is coupon automatic   | 0             |
+| Tên           | Kiểu    | Bắt buộc | Mô tả                    | Giá trị mẫu                |
+|---------------|---------|----------|--------------------------|----------------------------|
+| `code`        | string  | Không    | Mã coupon                | "SUMMER2024_UPDATED"      |
+| `shop`        | string  | Không    | Tên miền shop            | "example-shop.myshopify.com" |
+| `discount_id` | integer | Không    | ID của discount liên kết | 123                        |
 
-#### Example Request
+#### Ví dụ Request
 ```
 PUT /api/coupons/1
 {
   "code": "SUMMER2024_UPDATED",
   "shop": "example-shop.myshopify.com",
-  "discount_id": 123,
-  "automatic": 1
+  "discount_id": 123
 }
 ```
 
-#### Response Sample
+#### Ví dụ Response
 ```json
 {
+  "message": "Coupon updated successfully",
   "coupon": {
     "id": 1,
     "code": "SUMMER2024_UPDATED",
     "shop": "example-shop.myshopify.com",
     "discount_id": 123,
-    "automatic": 1,
-    "times_used": 0,
+    "automatic": 0,
+    "times_used": 5,
     "status": 1,
     "created_at": "2024-06-01T10:00:00.000000Z",
     "updated_at": "2024-06-01T11:30:00.000000Z"
@@ -219,90 +286,112 @@ PUT /api/coupons/1
 
 ---
 
-### 6. PUT /api/coupons/{id}/status
-Changes the status of a coupon (active/inactive).
+### 8. PUT /api/coupons/{id}/status
+Thay đổi trạng thái của coupon (hoạt động/không hoạt động).
 
-#### Path Parameters
-| Parameter Name | Data Type | Required | Description    | Example Value |
-|----------------|-----------|----------|----------------|---------------|
-| `id`           | integer   | Yes      | Coupon ID      | 1             |
+#### Tham số Path
+| Tên  | Kiểu    | Bắt buộc | Mô tả     | Giá trị mẫu |
+|------|---------|----------|-----------|-------------|
+| `id` | integer | Có       | ID coupon | 1           |
 
-#### Example Request
+#### Ví dụ Request
 ```
 PUT /api/coupons/1/status
 ```
 
-#### Response Sample
+#### Ví dụ Response
 ```json
 {
-  "success": true,
-  "message": "Coupon status changed successfully"
+  "message": "Coupon status updated successfully",
+  "coupon": {
+    "id": 1,
+    "code": "SUMMER2024",
+    "shop": "example-shop.myshopify.com",
+    "discount_id": 123,
+    "automatic": 0,
+    "times_used": 5,
+    "status": 0,
+    "created_at": "2024-06-01T10:00:00.000000Z",
+    "updated_at": "2024-06-05T15:30:00.000000Z"
+  }
 }
 ```
 
 ---
 
-### 7. PUT /api/coupons/{id}/decrement-times-used/{numDecrement}
-Decrements the times used counter for a coupon.
+### 9. PUT /api/coupons/{id}/times-used
+Giảm số lượt đã sử dụng của coupon.
 
-#### Path Parameters
-| Parameter Name  | Data Type | Required | Description              | Example Value |
-|-----------------|-----------|----------|--------------------------|---------------|
-| `id`            | integer   | Yes      | Coupon ID                | 1             |
-| `numDecrement`  | integer   | Yes      | Number to decrement by   | 2             |
+#### Tham số Path
+| Tên  | Kiểu    | Bắt buộc | Mô tả     | Giá trị mẫu |
+|------|---------|----------|-----------|-------------|
+| `id` | integer | Có       | ID coupon | 1           |
 
-#### Example Request
+#### Request Body
+| Tên           | Kiểu    | Bắt buộc | Mô tả              | Giá trị mẫu |
+|---------------|---------|----------|--------------------|-------------|
+| `numDecrement`| integer | Có       | Số lượng muốn giảm | 2           |
+
+#### Ví dụ Request
 ```
-PUT /api/coupons/1/decrement-times-used/2
+PUT /api/coupons/1/times-used
+{
+  "numDecrement": 2
+}
 ```
 
-#### Response Sample
+#### Ví dụ Response
 ```json
 {
-  "success": true,
-  "message": "Times used decremented successfully"
+  "message": "Coupon times used decremented successfully",
+  "coupon": {
+    "id": 1,
+    "code": "SUMMER2024",
+    "shop": "example-shop.myshopify.com",
+    "discount_id": 123,
+    "automatic": 0,
+    "times_used": 3,
+    "status": 1,
+    "created_at": "2024-06-01T10:00:00.000000Z",
+    "updated_at": "2024-06-05T15:30:00.000000Z"
+  }
 }
 ```
 
 ---
 
-### 8. DELETE /api/coupons/{id}
-Deletes a coupon.
+### 10. DELETE /api/coupons/{id}
+Xóa một coupon.
 
-#### Path Parameters
-| Parameter Name | Data Type | Required | Description    | Example Value |
-|----------------|-----------|----------|----------------|---------------|
-| `id`           | integer   | Yes      | Coupon ID      | 1             |
+#### Tham số Path
+| Tên  | Kiểu    | Bắt buộc | Mô tả     | Giá trị mẫu |
+|------|---------|----------|-----------|-------------|
+| `id` | integer | Có       | ID coupon | 1           |
 
-#### Example Request
+#### Ví dụ Request
 ```
 DELETE /api/coupons/1
 ```
 
-#### Response Sample
+#### Ví dụ Response
 ```json
 {
-  "success": true,
   "message": "Coupon deleted successfully"
 }
 ```
 
----
+## Các phản hồi lỗi
 
-## Error Responses
-
-All API endpoints return standardized error responses:
+Tất cả các endpoint đều trả về phản hồi lỗi theo chuẩn:
 
 ```json
 {
-  "error": true,
-  "message": "Error message details"
+  "message": "Chi tiết thông báo lỗi"
 }
 ```
 
-### Common Error Codes
-- **400** - Bad Request (invalid parameters)
-- **404** - Resource Not Found
-- **409** - Conflict (e.g., coupon code already exists)
-- **422** - Validation Error
-- **500** - Internal Server Error
+### Mã lỗi phổ biến
+- **400** - Bad Request (tham số không hợp lệ)
+- **404** - Resource Not Found (không tìm thấy tài nguyên)
+- **422** - Validation Error (lỗi xác thực)
+- **500** - Internal Server Error (lỗi máy chủ)
