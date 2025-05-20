@@ -13,10 +13,10 @@ Lấy danh sách các coupon với tùy chọn phân trang và lọc.
 |---------------|---------|----------|----------------------------------|--------------|
 | `perPageCoupon` | integer | Không    | Số lượng bản ghi mỗi trang       | 10           |
 | `pageCoupon`        | integer | Không    | Số trang hiện tại                | 1            |
-| `searchCoupon` | string  | Không    | Tìm kiếm theo mã coupon         | "SUMMER"     |
+| `searchCoupon` | string  | Không    | Tìm kiếm theo nhiều trường          | "SUMMER"     |
 | `status`      | string  | Không    | Lọc theo trạng thái (0=không hoạt động, 1=hoạt động) | "1"  |
 | `timeUsed`    | string  | Không    | Sắp xếp theo lượt sử dụng (asc/desc) | "desc"     |
-| `discountId`  | integer | Không    | Lọc theo ID giảm giá             | 123          |
+| `discountId`  | integer | Không    |              | 123          |
 
 #### Ví dụ Request
 ```
@@ -61,7 +61,7 @@ Tạo mới một coupon.
 |---------------|-----------|----------|----------------------------|----------------------------|
 | `code`        | string    | Có       | Mã coupon                  | "SUMMER2024"              |
 | `shop`        | string    | Không    | Tên miền shop              | "example-shop.myshopify.com" |
-| `discount_id` | integer   | Có       | ID của discount liên kết   | 123                        |
+| `discount_id` | integer   | Có       |    | 123                        |
 | `automatic`   | boolean/int | Không   |    | 0                          |
 | `status`   | boolean/int | Không   |    | 0                          |
 | `times_used`   | integer | Không   | Số lần dùng coupon   | 0                          |
