@@ -26,8 +26,8 @@ GET /api/coupons?perPageCoupon=10&page=1&searchCoupon=SUMMER&status=1&timeUsed=d
 #### Response Sample
 ```json
 {
-  "coupons": {
-    "couponData": [
+  "data": {
+    "coupons": [
       {
         "id": 1,
         "code": "SUMMER2024",
@@ -46,9 +46,9 @@ GET /api/coupons?perPageCoupon=10&page=1&searchCoupon=SUMMER&status=1&timeUsed=d
         }
       }
     ],
-    "totalPagesCoupon": 5,
-    "totalItemsCoupon": 42,
-    "currentPagesCoupon": 1
+    "totalPages": 5,
+    "totalItems": 42,
+    "currentPages": 1
   }
 }
 ```
@@ -87,7 +87,7 @@ GET /api/coupon/code/SUMMER2024
 
 ---
 
-### 3. GET /api/coupon/id/{id}
+### 3. GET /api/coupons/{id}
 Retrieves a coupon by its ID.
 
 #### Path Parameters
@@ -132,7 +132,7 @@ GET /api/coupon/id/1?withDiscount=true
 
 ---
 
-### 4. POST /api/coupon/create
+### 4. POST /api/coupons
 Creates a new coupon.
 
 #### Request Body
@@ -145,7 +145,7 @@ Creates a new coupon.
 
 #### Example Request
 ```
-POST /api/coupon/create
+POST /api/coupons
 {
   "code": "SUMMER2024",
   "shop": "example-shop.myshopify.com",
@@ -173,7 +173,7 @@ POST /api/coupon/create
 
 ---
 
-### 5. PUT /api/coupon/{id}
+### 5. PUT /api/coupons/{id}
 Updates an existing coupon.
 
 #### Path Parameters
@@ -191,7 +191,7 @@ Updates an existing coupon.
 
 #### Example Request
 ```
-PUT /api/coupon/1
+PUT /api/coupons/1
 {
   "code": "SUMMER2024_UPDATED",
   "shop": "example-shop.myshopify.com",
@@ -219,7 +219,7 @@ PUT /api/coupon/1
 
 ---
 
-### 6. PUT /api/coupon/{id}/status
+### 6. PUT /api/coupons/{id}/status
 Changes the status of a coupon (active/inactive).
 
 #### Path Parameters
@@ -229,7 +229,7 @@ Changes the status of a coupon (active/inactive).
 
 #### Example Request
 ```
-PUT /api/coupon/1/status
+PUT /api/coupons/1/status
 ```
 
 #### Response Sample
@@ -242,7 +242,7 @@ PUT /api/coupon/1/status
 
 ---
 
-### 7. PUT /api/coupon/{id}/decrement-times-used/{numDecrement}
+### 7. PUT /api/coupons/{id}/decrement-times-used/{numDecrement}
 Decrements the times used counter for a coupon.
 
 #### Path Parameters
@@ -253,7 +253,7 @@ Decrements the times used counter for a coupon.
 
 #### Example Request
 ```
-PUT /api/coupon/1/decrement-times-used/2
+PUT /api/coupons/1/decrement-times-used/2
 ```
 
 #### Response Sample
@@ -266,7 +266,7 @@ PUT /api/coupon/1/decrement-times-used/2
 
 ---
 
-### 8. DELETE /api/coupon/{id}
+### 8. DELETE /api/coupons/{id}
 Deletes a coupon.
 
 #### Path Parameters
@@ -276,7 +276,7 @@ Deletes a coupon.
 
 #### Example Request
 ```
-DELETE /api/coupon/1
+DELETE /api/coupons/1
 ```
 
 #### Response Sample
@@ -288,45 +288,6 @@ DELETE /api/coupon/1
 ```
 
 ---
-
-### 9. POST /api/coupon
-Creates a coupon associated with a discount.
-
-#### Request Body
-| Parameter Name | Data Type | Required | Description            | Example Value |
-|----------------|-----------|----------|------------------------|---------------|
-| `code`         | string    | Yes      | Coupon code           | "SUMMER2024"  |
-| `shop`         | string    | No       | Shop domain           | "example-shop.myshopify.com" |
-| `discount_id`  | integer   | Yes      | Associated discount ID | 123           |
-| `automatic`    | boolean/int | No     | Is coupon automatic   | 0             |
-
-#### Example Request
-```
-POST /api/coupon
-{
-  "code": "SUMMER2024",
-  "shop": "example-shop.myshopify.com",
-  "discount_id": 123,
-  "automatic": 0
-}
-```
-
-#### Response Sample
-```json
-{
-  "coupon": {
-    "id": 1,
-    "code": "SUMMER2024",
-    "shop": "example-shop.myshopify.com",
-    "discount_id": 123,
-    "automatic": 0,
-    "times_used": 0,
-    "status": 1,
-    "created_at": "2024-06-01T10:00:00.000000Z",
-    "updated_at": "2024-06-01T10:00:00.000000Z"
-  }
-}
-```
 
 ## Error Responses
 
