@@ -61,10 +61,10 @@ Tạo mới một coupon.
 |---------------|-----------|----------|----------------------------|----------------------------|
 | `code`        | string    | Có       | Mã coupon                  | "SUMMER2024"              |
 | `shop`        | string    | Không    | Tên miền shop              | "example-shop.myshopify.com" |
-| `discount_id` | integer   | Có       |    | 123                        |
+| `discountId` | integer   | Có       |    | 123                        |
 | `automatic`   | boolean/int | Không   |    | 0                          |
-| `status`   | boolean/int | Không   |    | 0                          |
-| `times_used`   | integer | Không   | Số lần dùng coupon   | 0                          |
+| `status`   | boolean/int | Không   |    | 1                          |
+| `timesUsed`   | integer | Không   | Số lần dùng coupon   | 0                          |
 
 #### Ví dụ Request
 ```
@@ -72,7 +72,7 @@ POST /api/coupons
 {
   "code": "SUMMER2024",
   "shop": "example-shop.myshopify.com",
-  "discount_id": 123,
+  "discountId": 123,
   "automatic": 0
 }
 ```
