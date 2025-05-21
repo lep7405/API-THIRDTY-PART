@@ -113,6 +113,7 @@ POST /api/discounts
 
 ### 3. PUT /api/discounts/{id}
 Cập nhật thông tin discount.
+Discount mà có Coupon có times_used > 0 thì không được cập nhật type , value , trial_days, discount_month 
 
 #### Tham số Path
 | Tên  | Kiểu     | Bắt buộc | Mô tả       | Giá trị mẫu |
@@ -123,9 +124,10 @@ Cập nhật thông tin discount.
 | Tên             | Kiểu      | Bắt buộc | Mô tả                      | Giá trị mẫu      |
 |-----------------|-----------|----------|----------------------------|------------------|
 | `name`          | string    | Không    | Tên của discount           | "Summer Sale 2024 Updated" |
+| `type`          | string    | Có       | Loại discount              | "percentage"     |
+| `value`         | integer   | Không    | Giá trị discount           | 20               |
 | `started_at`    | datetime  | Không    | Thời gian bắt đầu          | "2024-06-01T00:00:00" |
 | `expired_at`    | datetime  | Không    | Thời gian kết thúc         | "2024-09-30T23:59:59" |
-| `value`         | integer   | Không    | Giá trị discount           | 20               |
 | `usage_limit`   | integer   | Không    | Giới hạn sử dụng           | 200              |
 | `trial_days`    | integer   | Không    | Số ngày dùng thử           | 14               |
 | `discount_month`| integer   | Không    | Số tháng áp dụng discount  | 12               |
@@ -166,7 +168,7 @@ PUT /api/discounts/1
 
 ### 4. DELETE /api/discounts/{id}
 Xóa một discount.
-
+-Xóa luôn coupon có discount_id là discount 
 #### Tham số Path
 | Tên  | Kiểu     | Bắt buộc | Mô tả       | Giá trị mẫu |
 |------|----------|----------|-------------|-------------|
