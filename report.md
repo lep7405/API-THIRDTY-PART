@@ -78,24 +78,8 @@ GET /api/reports?perPageDiscount=10&pageDiscount=1&perPageCoupon=10&pageCoupon=1
 }
 ```
 
-## Error Handling
-
-All endpoints return standardized error responses with appropriate HTTP status codes:
-
-```json
-{
-  "error": true,
-  "message": "The report service is currently unavailable. Please try again later."
-}
-```
-
 ### Common Error Cases
 
 - **404**: Resource not found
 - **500**: Server error
 
-## Business Rules
-
-1. Report data consolidates both discount and coupon statistics
-2. Discount usage is counted when any of its associated coupons have been used
-3. The API handles pagination separately for discount and coupon data
