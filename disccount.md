@@ -5,6 +5,8 @@ Tài liệu này mô tả các API endpoint của dịch vụ Discount, bao gồ
 
 Tất cả các endpoint đều có thể là  `/api/{dbName}`, trong đó `{dbName}` là tên cơ sở dữ liệu hoặc tên ứng dụng dùng để phân biệt dữ liệu giữa các hệ thống
 
+Affiliate với Freegifts_new discount có thêm cột discount_month
+
 ## API Endpoints
 
 ### 1. GET /discounts
