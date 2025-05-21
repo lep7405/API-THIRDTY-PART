@@ -58,54 +58,16 @@ GET /api/discounts?perPageDiscount=10&pageDiscount=1&searchDiscount=summer&sortS
 
 ---
 
-### 2. GET /api/discounts/with-coupons
-Lấy danh sách các discount id kèm theo thông tin coupon liên quan.
-
-#### Ví dụ Request
-```
-GET /api/discounts/with-coupons
-```
-
-#### Ví dụ Response
-```json
-{
-  "message": "All discounts retrieved successfully",
-  "discounts": [
-    {
-      "id": 1,
-      "coupon": [
-        {
-          "id": 1,
-          "times_used": 5,
-          "discount_id": 1
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "coupon": [
-        {
-          "id": 2,
-          "times_used": 3,
-          "discount_id": 2
-        }
-      ]
-    }
-  ]
-}
-```
-
----
-
-### 3. POST /api/discounts
+### 2. POST /api/discounts
 Tạo mới một discount.
 -affiliate với freegifts_new có cột discount_month
+
 #### Request Body
 | Tên             | Kiểu      | Bắt buộc | Mô tả                      | Giá trị mẫu      |
 |-----------------|-----------|----------|----------------------------|------------------|
 | `name`          | string    | Có       | Tên của discount           | "Summer Sale 2024" |
 | `type`          | string    | Có       | Loại discount              | "percentage"     |
-| `value`         | integer   | Không        | Giá trị discount           | 15               |
+| `value`         | integer   | Không    | Giá trị discount           | 15               |
 | `started_at`    | datetime  | Không    | Thời gian bắt đầu          | "2024-06-01T00:00:00" |
 | `expired_at`    | datetime  | Không    | Thời gian kết thúc         | "2024-08-31T23:59:59" |
 | `usage_limit`   | integer   | Không    | Giới hạn sử dụng           | 100              |
@@ -149,76 +111,82 @@ POST /api/discounts
 
 ---
 
-### 4. GET /api/discounts/id-and-name
-Lấy danh sách ID và tên của tất cả discount.
+### 3. PUT /api/discounts/{id}
+Cập nhật thông tin discount.
 
-#### Ví dụ Request
-```
-GET /api/discounts/id-and-name
-```
-
-#### Ví dụ Response
-```json
-{
-  "message": "Discount IDs and names retrieved successfully",
-  "discounts": [
-    {
-      "id": 1,
-      "name": "Summer Sale 2024"
-    },
-    {
-      "id": 2,
-      "name": "Winter Promotion 2024"
-    }
-  ]
-}
-```
-
----
-
-### 5. POST /api/discounts/affiliate-partners
-
-Tạo mới hoặc cập nhật giảm giá (discount) dựa trên các thuộc tính được cung cấp.
+#### Tham số Path
+| Tên  | Kiểu     | Bắt buộc | Mô tả       | Giá trị mẫu |
+|------|----------|----------|-------------|-------------|
+| `id` | integer  | Có       | ID discount | 1           |
 
 #### Request Body
-| Tên           | Kiểu    | Bắt buộc | Mô tả                      | Giá trị mẫu     |
-|---------------|---------|----------|----------------------------|-----------------|
-| `name`        | string  | Có       | Tên của discount           | "Summer Sale"   |
-| `type`        | string  | Có       | Loại discount (luôn là percentage) | "percentage" |
-| `value`       | integer | Có       | Giá trị discount (%)       | 10              |
-| `trial_days`  | integer | Có       | Số ngày dùng thử           | 7               |
+| Tên             | Kiểu      | Bắt buộc | Mô tả                      | Giá trị mẫu      |
+|-----------------|-----------|----------|----------------------------|------------------|
+| `name`          | string    | Không    | Tên của discount           | "Summer Sale 2024 Updated" |
+| `started_at`    | datetime  | Không    | Thời gian bắt đầu          | "2024-06-01T00:00:00" |
+| `expired_at`    | datetime  | Không    | Thời gian kết thúc         | "2024-09-30T23:59:59" |
+| `value`         | integer   | Không    | Giá trị discount           | 20               |
+| `usage_limit`   | integer   | Không    | Giới hạn sử dụng           | 200              |
+| `trial_days`    | integer   | Không    | Số ngày dùng thử           | 14               |
+| `discount_month`| integer   | Không    | Số tháng áp dụng discount  | 12               |
 
 #### Ví dụ Request
 ```
-POST /api/discounts/affiliate-partners
+PUT /api/discounts/1
 {
-  "name": "Summer Sale",
-  "type": "percentage",
-  "value": 10,
-  "trial_days": 7
+  "name": "Summer Sale 2024 Updated",
+  "value": 20,
+  "expired_at": "2024-09-30T23:59:59",
+  "usage_limit": 200,
+  "trial_days": 14
 }
 ```
 
 #### Ví dụ Response
 ```json
 {
-  "message": "Discount created successfully",
+  "message": "Discount updated successfully",
   "discount": {
     "id": 1,
-    "name": "Summer Sale",
+    "name": "Summer Sale 2024 Updated",
     "type": "percentage",
-    "value": 10,
-    "usage_limit": 1,
-    "trial_days": 7,
-    "updated_at": "2024-06-15T10:00:00.000000Z",
-    "created_at": "2024-06-15T10:00:00.000000Z"
+    "value": 20,
+    "started_at": "2024-06-01T00:00:00.000000Z",
+    "expired_at": "2024-09-30T23:59:59.000000Z",
+    "usage_limit": 200,
+    "trial_days": 14,
+    "discount_month": 12,
+    "created_at": "2024-05-15T10:00:00.000000Z",
+    "updated_at": "2024-05-20T15:30:00.000000Z"
   }
 }
 ```
 
 ---
 
-### 6. GET /api/discounts/{id}
+### 4. DELETE /api/discounts/{id}
+Xóa một discount.
+
+#### Tham số Path
+| Tên  | Kiểu     | Bắt buộc | Mô tả       | Giá trị mẫu |
+|------|----------|----------|-------------|-------------|
+| `id` | integer  | Có       | ID discount | 1           |
+
+#### Ví dụ Request
+```
+DELETE /api/discounts/1
+```
+
+#### Ví dụ Response
+```json
+{
+  "message": "Discount deleted successfully"
+}
+```
+
+---
+
+### 5. GET /api/discounts/{id}
 Lấy thông tin chi tiết của discount theo ID.
 
 #### Tham số Path
@@ -265,7 +233,73 @@ GET /api/discounts/1?withCoupon=true
 
 ---
 
-### 7. POST /api/discounts/find-by-ids
+### 6. GET /api/discounts/with-coupons
+Lấy danh sách các discount id kèm theo thông tin coupon liên quan.
+
+#### Ví dụ Request
+```
+GET /api/discounts/with-coupons
+```
+
+#### Ví dụ Response
+```json
+{
+  "message": "All discounts retrieved successfully",
+  "discounts": [
+    {
+      "id": 1,
+      "coupon": [
+        {
+          "id": 1,
+          "times_used": 5,
+          "discount_id": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "coupon": [
+        {
+          "id": 2,
+          "times_used": 3,
+          "discount_id": 2
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### 7. GET /api/discounts/id-and-name
+Lấy danh sách ID và tên của tất cả discount.
+
+#### Ví dụ Request
+```
+GET /api/discounts/id-and-name
+```
+
+#### Ví dụ Response
+```json
+{
+  "message": "Discount IDs and names retrieved successfully",
+  "discounts": [
+    {
+      "id": 1,
+      "name": "Summer Sale 2024"
+    },
+    {
+      "id": 2,
+      "name": "Winter Promotion 2024"
+    }
+  ]
+}
+```
+
+---
+
+### 8. POST /api/discounts/find-by-ids
 Lấy thông tin các discount theo danh sách ID.
 
 #### Request Body
@@ -310,77 +344,42 @@ POST /api/discounts/find-by-ids
 
 ---
 
-### 8. PUT /api/discounts/{id}
-Cập nhật thông tin discount.
-
-#### Tham số Path
-| Tên  | Kiểu     | Bắt buộc | Mô tả       | Giá trị mẫu |
-|------|----------|----------|-------------|-------------|
-| `id` | integer  | Có       | ID discount | 1           |
+### 9. POST /api/discounts/affiliate-partners
+Tạo mới hoặc cập nhật giảm giá (discount) dựa trên các thuộc tính được cung cấp.
 
 #### Request Body
-| Tên             | Kiểu      | Bắt buộc | Mô tả                      | Giá trị mẫu      |
-|-----------------|-----------|----------|----------------------------|------------------|
-| `name`          | string    | Không    | Tên của discount           | "Summer Sale 2024 Updated" |
-| `type`          | string    | Không    | Loại discount              | "percentage"     |
-| `value`         | integer   | Không    | Giá trị discount           | 20               |
-| `started_at`    | datetime  | Không    | Thời gian bắt đầu          | "2024-06-01T00:00:00" |
-| `expired_at`    | datetime  | Không    | Thời gian kết thúc         | "2024-09-30T23:59:59" |
-| `usage_limit`   | integer   | Không    | Giới hạn sử dụng           | 200              |
-| `trial_days`    | integer   | Không    | Số ngày dùng thử           | 14               |
-| `discount_month`| integer   | Không    | Số tháng áp dụng discount  | 12               |
+| Tên           | Kiểu    | Bắt buộc | Mô tả                      | Giá trị mẫu     |
+|---------------|---------|----------|----------------------------|-----------------|
+| `name`        | string  | Có       | Tên của discount           | "Summer Sale"   |
+| `type`        | string  | Có       | Loại discount (luôn là percentage) | "percentage" |
+| `value`       | integer | Có       | Giá trị discount (%)       | 10              |
+| `trial_days`  | integer | Có       | Số ngày dùng thử           | 7               |
 
 #### Ví dụ Request
 ```
-PUT /api/discounts/1
+POST /api/discounts/affiliate-partners
 {
-  "name": "Summer Sale 2024 Updated",
-  "value": 20,
-  "expired_at": "2024-09-30T23:59:59",
-  "usage_limit": 200,
-  "trial_days": 14
+  "name": "Summer Sale",
+  "type": "percentage",
+  "value": 10,
+  "trial_days": 7
 }
 ```
 
 #### Ví dụ Response
 ```json
 {
-  "message": "Discount updated successfully",
+  "message": "Discount created successfully",
   "discount": {
     "id": 1,
-    "name": "Summer Sale 2024 Updated",
+    "name": "Summer Sale",
     "type": "percentage",
-    "value": 20,
-    "started_at": "2024-06-01T00:00:00.000000Z",
-    "expired_at": "2024-09-30T23:59:59.000000Z",
-    "usage_limit": 200,
-    "trial_days": 14,
-    "discount_month": 12,
-    "created_at": "2024-05-15T10:00:00.000000Z",
-    "updated_at": "2024-05-20T15:30:00.000000Z"
+    "value": 10,
+    "usage_limit": 1,
+    "trial_days": 7,
+    "updated_at": "2024-06-15T10:00:00.000000Z",
+    "created_at": "2024-06-15T10:00:00.000000Z"
   }
-}
-```
-
----
-
-### 9. DELETE /api/discounts/{id}
-Xóa một discount.
-
-#### Tham số Path
-| Tên  | Kiểu     | Bắt buộc | Mô tả       | Giá trị mẫu |
-|------|----------|----------|-------------|-------------|
-| `id` | integer  | Có       | ID discount | 1           |
-
-#### Ví dụ Request
-```
-DELETE /api/discounts/1
-```
-
-#### Ví dụ Response
-```json
-{
-  "message": "Discount deleted successfully"
 }
 ```
 
