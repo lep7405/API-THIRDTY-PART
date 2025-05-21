@@ -5,7 +5,7 @@ Tài liệu này mô tả chi tiết các API endpoint cho dịch vụ Coupon, b
 
 ## API Endpoints
 
-### 1. GET /api/coupons
+### 1. GET /coupons
 Lấy danh sách các coupon với tùy chọn phân trang và lọc.
 
 #### Tham số Query
@@ -20,7 +20,7 @@ Lấy danh sách các coupon với tùy chọn phân trang và lọc.
 
 #### Ví dụ Request
 ```
-GET /api/coupons?perPageCoupon=10&pageCoupon=1&searchCoupon=SUMMER&status=1&timeUsed=desc
+GET /coupons?perPageCoupon=10&pageCoupon=1&searchCoupon=SUMMER&status=1&timeUsed=desc
 ```
 
 #### Ví dụ Response
@@ -53,22 +53,22 @@ GET /api/coupons?perPageCoupon=10&pageCoupon=1&searchCoupon=SUMMER&status=1&time
 
 ---
 
-### 2. POST /api/coupons
+### 2. POST /coupons
 Tạo mới một coupon.
 
 #### Request Body
 | Tên           | Kiểu      | Bắt buộc | Mô tả                      | Giá trị mẫu                |
 |---------------|-----------|----------|----------------------------|----------------------------|
 | `code`        | string    | Có       | Mã coupon                  | "SUMMER2024"              |
-| `shop`        | string    | Không    | Tên miền shop              | "example-shop.myshopify.com" |
-| `discountId` | integer   | Có       |    | 123                        |
-| `automatic`   | boolean/int | Không   |    | 0                          |
-| `status`   | boolean/int | Không   |    | 1                          |
-| `timesUsed`   | integer | Không   | Số lần dùng coupon   | 0                          |
+| `shop`        | string    | Không    | Tên miền shop               | "example-shop.myshopify.com" |
+| `discount_id` | integer   | Có       |    | 123                        |
+| `automatic`   | boolean | Không   |    | 0                          |
+| `status`   | boolean | Không   |    | 1                          |
+| `times_used`   | integer | Không   | Số lần dùng coupon   | 0                          |
 
 #### Ví dụ Request
 ```
-POST /api/coupons
+POST /coupons
 {
   "code": "SUMMER2024",
   "shop": "example-shop.myshopify.com",
@@ -97,7 +97,7 @@ POST /api/coupons
 
 ---
 
-### 3. GET /api/coupons/id/{id}
+### 3. GET /coupons/{id}
 Lấy thông tin coupon theo ID.
 
 #### Tham số Path
@@ -112,7 +112,7 @@ Lấy thông tin coupon theo ID.
 
 #### Ví dụ Request
 ```
-GET /api/coupons/id/1?withDiscount=true
+GET /coupons/id/1?withDiscount=true
 ```
 
 #### Ví dụ Response
@@ -139,7 +139,7 @@ GET /api/coupons/id/1?withDiscount=true
 
 ---
 
-### 4. GET /api/coupons/code/{code}
+### 4. GET /coupons/code/{code}
 Lấy thông tin coupon theo mã code.
 
 #### Tham số Path
@@ -149,7 +149,7 @@ Lấy thông tin coupon theo mã code.
 
 #### Ví dụ Request
 ```
-GET /api/coupons/code/SUMMER2024
+GET /coupons/code/SUMMER2024
 ```
 
 #### Ví dụ Response
@@ -172,7 +172,7 @@ GET /api/coupons/code/SUMMER2024
 
 ---
 
-### 5. GET /api/coupons/discount/{id}/shop/{shop}
+### 5. GET /coupons/discount/{id}/shop/{shop}
 Lấy coupon theo ID giảm giá và shop.
 
 #### Tham số Path
@@ -183,7 +183,7 @@ Lấy coupon theo ID giảm giá và shop.
 
 #### Ví dụ Request
 ```
-GET /api/coupons/discount/123/shop/example-shop.myshopify.com/
+GET /coupons/discount/123/shop/example-shop.myshopify.com/
 ```
 
 #### Ví dụ Response
@@ -206,8 +206,8 @@ GET /api/coupons/discount/123/shop/example-shop.myshopify.com/
 
 ---
 
-### 6. GET /api/coupons/discount/{id}
-Lấy danh sách các coupon theo ID giảm giá và có mã bắt đầu bằng "GENAUTO".
+### 6. GET /coupons/discount/{id}
+Lấy coupon theo discount ID và có mã bắt đầu bằng "GENAUTO".
 
 #### Tham số Path
 | Tên  | Kiểu    | Bắt buộc | Mô tả       | Giá trị mẫu |
@@ -216,7 +216,7 @@ Lấy danh sách các coupon theo ID giảm giá và có mã bắt đầu bằng
 
 #### Ví dụ Request
 ```
-GET /api/coupons/discount/123
+GET /coupons/discount/123
 ```
 
 #### Ví dụ Response
@@ -241,7 +241,7 @@ GET /api/coupons/discount/123
 
 ---
 
-### 7. PUT /api/coupons/{id}
+### 7. PUT /coupons/{id}
 Cập nhật thông tin coupon.
 
 #### Tham số Path
@@ -252,13 +252,13 @@ Cập nhật thông tin coupon.
 #### Request Body
 | Tên           | Kiểu    | Bắt buộc | Mô tả                    | Giá trị mẫu                |
 |---------------|---------|----------|--------------------------|----------------------------|
-| `code`        | string  | Không    | Mã coupon                | "SUMMER2024_UPDATED"      |
+| `code`        | string  | Có    | Mã coupon                | "SUMMER2024_UPDATED"      |
 | `shop`        | string  | Không    | Tên miền shop            | "example-shop.myshopify.com" |
-| `discount_id` | integer | Không    | ID của discount liên kết | 123                        |
+| `discount_id` | integer | Có    | ID của discount liên kết | 123                        |
 
 #### Ví dụ Request
 ```
-PUT /api/coupons/1
+PUT /coupons/1
 {
   "code": "SUMMER2024_UPDATED",
   "shop": "example-shop.myshopify.com",
@@ -286,7 +286,7 @@ PUT /api/coupons/1
 
 ---
 
-### 8. PUT /api/coupons/{id}/status
+### 8. PUT /coupons/{id}/status
 Thay đổi trạng thái của coupon (hoạt động/không hoạt động).
 
 #### Tham số Path
@@ -296,7 +296,7 @@ Thay đổi trạng thái của coupon (hoạt động/không hoạt động).
 
 #### Ví dụ Request
 ```
-PUT /api/coupons/1/status
+PUT /coupons/1/status
 ```
 
 #### Ví dụ Response
@@ -319,7 +319,7 @@ PUT /api/coupons/1/status
 
 ---
 
-### 9. PUT /api/coupons/{id}/times-used
+### 9. PUT /coupons/{id}/decre-times-used
 Giảm số lượt đã sử dụng của coupon.
 
 #### Tham số Path
@@ -334,7 +334,7 @@ Giảm số lượt đã sử dụng của coupon.
 
 #### Ví dụ Request
 ```
-PUT /api/coupons/1/times-used
+PUT /coupons/1/decre-times-used
 {
   "numDecrement": 2
 }
@@ -360,7 +360,7 @@ PUT /api/coupons/1/times-used
 
 ---
 
-### 10. DELETE /api/coupons/{id}
+### 10. DELETE /coupons/{id}
 Xóa một coupon.
 
 #### Tham số Path
@@ -370,7 +370,7 @@ Xóa một coupon.
 
 #### Ví dụ Request
 ```
-DELETE /api/coupons/1
+DELETE /coupons/1
 ```
 
 #### Ví dụ Response
@@ -380,15 +380,6 @@ DELETE /api/coupons/1
 }
 ```
 
-## Các phản hồi lỗi
-
-Tất cả các endpoint đều trả về phản hồi lỗi theo chuẩn:
-
-```json
-{
-  "message": "Chi tiết thông báo lỗi"
-}
-```
 
 ### Mã lỗi phổ biến
 - **400** - Bad Request (tham số không hợp lệ)
