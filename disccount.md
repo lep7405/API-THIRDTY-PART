@@ -3,9 +3,11 @@
 ## Tổng quan
 Tài liệu này mô tả các API endpoint của dịch vụ Discount, bao gồm các tham số yêu cầu và phản hồi mong đợi.
 
+Tất cả các endpoint đều có thể là  `/api/{dbName}`, trong đó `{dbName}` là tên cơ sở dữ liệu hoặc tên ứng dụng dùng để phân biệt dữ liệu giữa các hệ thống
+
 ## API Endpoints
 
-### 1. GET /api/discounts
+### 1. GET /discounts
 Lấy danh sách các discount với tùy chọn phân trang và lọc.
 
 #### Tham số Query
@@ -19,7 +21,7 @@ Lấy danh sách các discount với tùy chọn phân trang và lọc.
 
 #### Ví dụ Request
 ```
-GET /api/discounts?perPageDiscount=10&pageDiscount=1&searchDiscount=summer&sortStartedAt=desc&withCoupon=true
+GET /discounts?perPageDiscount=10&pageDiscount=1&searchDiscount=summer&sortStartedAt=desc&withCoupon=true
 ```
 
 #### Ví dụ Response
@@ -58,7 +60,7 @@ GET /api/discounts?perPageDiscount=10&pageDiscount=1&searchDiscount=summer&sortS
 
 ---
 
-### 2. POST /api/discounts
+### 2. POST /discounts
 Tạo mới một discount.
 -affiliate với freegifts_new có cột discount_month
 
@@ -76,7 +78,7 @@ Tạo mới một discount.
 
 #### Ví dụ Request
 ```
-POST /api/discounts
+POST /discounts
 {
   "name": "Summer Sale 2024",
   "type": "percentage",
@@ -111,7 +113,7 @@ POST /api/discounts
 
 ---
 
-### 3. PUT /api/discounts/{id}
+### 3. PUT /discounts/{id}
 Cập nhật thông tin discount.
 Discount mà có Coupon có times_used > 0 thì không được cập nhật type , value , trial_days, discount_month 
 
@@ -123,7 +125,7 @@ Discount mà có Coupon có times_used > 0 thì không được cập nhật typ
 #### Request Body
 | Tên             | Kiểu      | Bắt buộc | Mô tả                      | Giá trị mẫu      |
 |-----------------|-----------|----------|----------------------------|------------------|
-| `name`          | string    | Không    | Tên của discount           | "Summer Sale 2024 Updated" |
+| `name`          | string    | Có    | Tên của discount           | "Summer Sale 2024 Updated" |
 | `type`          | string    | Có       | Loại discount              | "percentage"     |
 | `value`         | integer   | Không    | Giá trị discount           | 20               |
 | `started_at`    | datetime  | Không    | Thời gian bắt đầu          | "2024-06-01T00:00:00" |
@@ -134,7 +136,7 @@ Discount mà có Coupon có times_used > 0 thì không được cập nhật typ
 
 #### Ví dụ Request
 ```
-PUT /api/discounts/1
+PUT /discounts/1
 {
   "name": "Summer Sale 2024 Updated",
   "value": 20,
@@ -166,7 +168,7 @@ PUT /api/discounts/1
 
 ---
 
-### 4. DELETE /api/discounts/{id}
+### 4. DELETE /discounts/{id}
 Xóa một discount.
 -Xóa luôn coupon có discount_id là discount 
 #### Tham số Path
@@ -176,7 +178,7 @@ Xóa một discount.
 
 #### Ví dụ Request
 ```
-DELETE /api/discounts/1
+DELETE /discounts/1
 ```
 
 #### Ví dụ Response
@@ -188,7 +190,7 @@ DELETE /api/discounts/1
 
 ---
 
-### 5. GET /api/discounts/{id}
+### 5. GET /discounts/{id}
 Lấy thông tin chi tiết của discount theo ID.
 
 #### Tham số Path
@@ -203,7 +205,7 @@ Lấy thông tin chi tiết của discount theo ID.
 
 #### Ví dụ Request
 ```
-GET /api/discounts/1?withCoupon=true
+GET /discounts/1?withCoupon=true
 ```
 
 #### Ví dụ Response
@@ -235,12 +237,12 @@ GET /api/discounts/1?withCoupon=true
 
 ---
 
-### 6. GET /api/discounts/with-coupons
+### 6. GET /discounts/with-coupons
 Lấy danh sách các discount id kèm theo thông tin coupon liên quan.
 
 #### Ví dụ Request
 ```
-GET /api/discounts/with-coupons
+GET /discounts/with-coupons
 ```
 
 #### Ví dụ Response
@@ -274,12 +276,12 @@ GET /api/discounts/with-coupons
 
 ---
 
-### 7. GET /api/discounts/id-and-name
+### 7. GET /discounts/id-and-name
 Lấy danh sách ID và tên của tất cả discount.
 
 #### Ví dụ Request
 ```
-GET /api/discounts/id-and-name
+GET /discounts/id-and-name
 ```
 
 #### Ví dụ Response
@@ -301,7 +303,7 @@ GET /api/discounts/id-and-name
 
 ---
 
-### 8. POST /api/discounts/find-by-ids
+### 8. POST /discounts/find-by-ids
 Lấy thông tin các discount theo danh sách ID.
 
 #### Request Body
@@ -311,7 +313,7 @@ Lấy thông tin các discount theo danh sách ID.
 
 #### Ví dụ Request
 ```
-POST /api/discounts/find-by-ids
+POST /discounts/find-by-ids
 {
   "ids": [1, 2, 3]
 }
@@ -346,7 +348,7 @@ POST /api/discounts/find-by-ids
 
 ---
 
-### 9. POST /api/discounts/affiliate-partners
+### 9. POST /discounts/affiliate-partners
 Tạo mới hoặc cập nhật giảm giá (discount) dựa trên các thuộc tính được cung cấp.
 
 #### Request Body
@@ -359,7 +361,7 @@ Tạo mới hoặc cập nhật giảm giá (discount) dựa trên các thuộc 
 
 #### Ví dụ Request
 ```
-POST /api/discounts/affiliate-partners
+POST /discounts/affiliate-partners
 {
   "name": "Summer Sale",
   "type": "percentage",
