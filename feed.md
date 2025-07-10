@@ -12,4 +12,4 @@
 
 ## Report
 ![image](https://github.com/user-attachments/assets/96ef9afe-28e2-473f-8e1e-af71ca640f47)
-### discount không có usage_limit , coupon không có shop, không có discount: id, name 
+### discount đang thiếu usage_limit , coupon thiếu shop, discount: id, name 
