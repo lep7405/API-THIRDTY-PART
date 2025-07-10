@@ -18,7 +18,6 @@ Lấy danh sách các discount với tùy chọn phân trang và lọc.
 | `perPageDiscount`| integer  | Không    | Số lượng bản ghi mỗi trang    | 10          |
 | `pageDiscount`   | integer  | Không    | Số trang hiện tại             | 1           |
 | `searchDiscount` | string   | Không    | Tìm kiếm theo tên discount    | "summer"    |
-| `sortStartedAt`  | string   | Không    | Sắp xếp theo ngày bắt đầu (asc/desc) | "desc" |
 | `withCoupon`     | boolean  | Không    | Bao gồm thông tin coupon      | true        |
 
 #### Ví dụ Request
@@ -71,7 +70,7 @@ Tạo mới một discount.
 |-----------------|-----------|----------|----------------------------|------------------|
 | `name`          | string    | Có       | Tên của discount           | "Summer Sale 2024" |
 | `type`          | string    | Có       | Loại discount              | "percentage"     |
-| `value`         | integer   | Không    | Giá trị discount           | 15               |
+| `value`         | numeric   | Không    | Giá trị discount           | 15               |
 | `started_at`    | datetime  | Không    | Thời gian bắt đầu          | "2024-06-01T00:00:00" |
 | `expired_at`    | datetime  | Không    | Thời gian kết thúc         | "2024-08-31T23:59:59" |
 | `usage_limit`   | integer   | Không    | Giới hạn sử dụng           | 100              |
@@ -129,7 +128,7 @@ Discount mà có Coupon có times_used > 0 thì không được cập nhật typ
 |-----------------|-----------|----------|----------------------------|------------------|
 | `name`          | string    | Có    | Tên của discount           | "Summer Sale 2024 Updated" |
 | `type`          | string    | Có       | Loại discount              | "percentage"     |
-| `value`         | integer   | Không    | Giá trị discount           | 20               |
+| `value`         | numeric   | Không    | Giá trị discount           | 20               |
 | `started_at`    | datetime  | Không    | Thời gian bắt đầu          | "2024-06-01T00:00:00" |
 | `expired_at`    | datetime  | Không    | Thời gian kết thúc         | "2024-09-30T23:59:59" |
 | `usage_limit`   | integer   | Không    | Giới hạn sử dụng           | 200              |
