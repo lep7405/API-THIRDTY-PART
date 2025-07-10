@@ -1,5 +1,5 @@
 ## Discount
-### Tạo discount cái response đang bị cái message với discount 
+### Tạo discount cái response đang bị cái message với discount lặp
 ![image](https://github.com/user-attachments/assets/3fadd1df-c574-4958-a3fa-2154d8aea384)
 ### Tạo disount , ô chỉnh lại cái check value là numeric chứ không phải là integer 
 ### Index discount nó đang không sắp xếp theo id giảm dần
@@ -12,4 +12,4 @@
 
 ## Report
 ![image](https://github.com/user-attachments/assets/96ef9afe-28e2-473f-8e1e-af71ca640f47)
-## discount không có usage_limit , coupon không có shop, không có discount: id, name 
+### discount không có usage_limit , coupon không có shop, không có discount: id, name 
