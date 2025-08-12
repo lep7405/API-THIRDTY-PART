@@ -17,7 +17,6 @@ Retrieves comprehensive reporting data including discount statistics, coupon usa
 | `perPageDiscount` | integer   | No       | Discounts per page               | 5             |
 | `pageDiscount`    | integer   | No       | Current discount page            | 1             |
 | `searchDiscount`  | string    | No       | Search term for discounts        | "summer"      |
-| `startedAt`       | string    | No       | Filter by start date             | "2024-06-01"  |
 | `perPageCoupon`   | integer   | No       | Coupons per page                 | 5             |
 | `pageCoupon`      | integer   | No       | Current coupon page              | 1             |
 | `searchCoupon`    | string    | No       | Search term for coupons          | "SALE50"      |
