@@ -54,7 +54,7 @@ GET /api/reports?perPageDiscount=10&pageDiscount=1&perPageCoupon=10&pageCoupon=1
     ],
     "totalPagesDiscount": 5,
     "totalItemsDiscount": 42,
-    "currentPagesDiscount": 1,
+    "currentPageDiscount": 1,
     
     "couponData": [
       {
@@ -67,7 +67,7 @@ GET /api/reports?perPageDiscount=10&pageDiscount=1&perPageCoupon=10&pageCoupon=1
     ],
     "totalPagesCoupon": 3,
     "totalItemsCoupon": 25,
-    "currentPagesCoupon": 1,
+    "currentPageCoupon": 1,
     
     "countDiscount": 42,
     "countDiscountUsed": 15,
