@@ -37,12 +37,12 @@ POST /discounts/affiliate-partners
 }
 ```
 ### 5. GET /coupons/discount/{id}/shop/{shop}
-Lấy coupon theo ID giảm giá và shop.
+Lấy coupon theo ID discount và shop.
 
 #### Tham số Path
 | Tên    | Kiểu    | Bắt buộc | Mô tả          | Giá trị mẫu                |
 |--------|---------|----------|----------------|----------------------------|
-| `id`   | integer | Có       | ID giảm giá    | 123                        |
+| `id`   | integer | Có       | ID discount    | 123                        |
 | `shop` | string  | Có       | Tên miền shop  | "example-shop.myshopify.com" |
 
 #### Ví dụ Request
