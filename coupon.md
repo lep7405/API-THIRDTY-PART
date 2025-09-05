@@ -72,7 +72,7 @@ POST /coupons
 {
   "code": "SUMMER2024",
   "shop": "example-shop.myshopify.com",
-  "discountId": 123,
+  "discount_id": 123,
   "automatic": 0
 }
 ```
